@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2010 Roger Parkinson
+
+    Licensed under the Apache License, Version 2.0 (the "License"); you may
+    not use this file except in compliance with the License. You may obtain
+    a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+    License for the specific language governing permissions and limitations
+    under the License.
+-->
+<ivy-module version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+	<info organisation="nz.co.senanque" module="weblogic-jndi-startup" revision="1.0" status="integration" publication="20100308095248">
+	    <license name="Apache License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
+        <ivyauthor name="Roger Parkinson" url="http://code.google.com/p/weblogic-jndi-startup/"/>
+        <repository pattern="http://ivyroundup.googlecode.com/svn/trunk/repo/modules/[organisation]/[module]/[revision]/ivy.xml" ivys="true" url="http://ivyroundup.googlecode.com/" name="ivyroundup"/>
+        <description homepage="http://code.google.com/p/weblogic-jndi-startup/">
+        Used to set custom JNDI names and objects in WebLogic startup
+        </description>
+    </info>	
+	<configurations>
+		<conf name="compile"/>
+		<conf name="default" extends="compile"/>
+		<conf name="test" extends="default"/>
+		<conf name="docs" visibility="private"/>
+		<conf name="build" visibility="private"/>
+	</configurations>
+	<publications>
+	</publications>
+	<dependencies>
+		<dependency org="net.bluecow" name="ant-googlecode" rev="0.0.2" conf="build->default"/>
+		<dependency org="net.sourceforge.antcontrib" name="ant-contrib" rev="1.0b3" conf="build->default"/>
+		<dependency org="nz.co.senanque" name="maduradocs" rev="5.0.3" conf="docs->default"/>
+        <exclude org="commons-logging" ext="*"/> <!-- ensures any logging can be used (log4j, logback etc) -->
+        <exclude org="avalon-framework" ext="jar"/>
+        <exclude org="logkit" ext="jar"/>
+        <exclude org="javax.servlet" ext="jar"/>
+        <exclude org="*" ext="*" type="source"/>
+        <exclude org="*" ext="*" type="javadoc"/>
+	</dependencies>
+</ivy-module>
