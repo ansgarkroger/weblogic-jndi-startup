@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="MaduraHTML.xsl"?>
+<doc xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="MaduraDoc.xsd">
+	<title>
+		<MainTitle>weblogic-jndi-startup</MainTitle>
+		<SubTitle>User Guide</SubTitle>
+		<Author>Roger Parkinson</Author>
+		<Revision>$Revision: 4 $</Revision>
+		<image>logo.jpg</image>
+		<xi:include href="weblogic-jndi-startup.log"/>
+		<references>
+			<reference t="maduradocs" url="http://code.google.com/p/maduradocs/" />
+			<reference t="Apache Licence 2.0" url="http://www.apache.org/licenses/LICENSE-2.0" />
+		</references>
+	</title>
+	<body>
+		<process-log/>
+		<process-references/>
+		<h1 t="Overview">
+		<p>Unlike JBoss and Glassfish there is no way to define a custom JNDI object (eg a URL) in the WebLogic console. This provides a very simple way to do that.</p>
+
+<p>For example we use this to define the location of various configuration files (see maduraconfiguration in google code) and we locate these files using a URL defined in JNDI.</p>
+
+<p>To use this you just need to put the jar file into your &lt;domain&gt;/server/lib directory` (I tested this in &lt;BEA&gt;/wlserver_10.0/samples/domains/wl_server/lib using WebLogic 10.0)</p>
+
+<p>Then go into the console and create a startup/shutdown class (the page is called Startup and Shutdown Classes and you add one). Your page should look like this:</p>
+
+<img href="http://weblogic-jndi-startup.googlecode.com/files/jndi.png" width="16cm"/>
+
+<p>You enter the class name (always nz.co.senanque.jndi.WebLogicJndiStartup).
+I set 'Failure is Fatal' but be careful, if you do something wrong your server won't start.
+You do want it to run before you applications start (the last check box).</p>
+
+<p>But most important is the Arguments. The one shown is:</p>
+
+<code>configURL&lt;java.net.URL&gt;=file:/abc/def</code>
+
+<p>The JNDI name is, therefore, configURL and the type is a URL. The value is file:/abc/def
+If you specify a type the type must</p>
+<list>
+<le>be on the classpath</le>
+<le>have a constructor that takes a single String argument.</le>
+</list>
+<p>The value string (file:/abc/def) is passed to the constructor and the result placed in JNDI.</p>
+
+<p>To access it from your application you can use something like this:</p>
+<code>
+Context context = new InitialContext();
+URL config = (URL)context.lookup("configURL");        
+System.out.println("configURL="+String.valueOf(config));
+</code>
+<p>Note that you can have as many of these startup classes as you want. You can reuse this same class over and over with different arguments. We typically have just one per application but your needs might be different.</p>
+</h1>
+	</body>
+	
+</doc>
