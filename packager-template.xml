@@ -29,6 +29,23 @@
         <!-- jar -->
         <move file="archive/${download.name}-${revision}.jar" tofile="artifacts/jars/${download.name}.jar"/>
 
+        <!-- javadoc -->
+        <mkdir dir="javadoc"/>
+        <unzip src="archive/${download.name}-javadocs-${revision}.zip" dest="javadoc"/>
+        <zip destfile="artifacts/javadocs/javadoc.zip">
+            <fileset dir="javadoc"/>
+        </zip>
+        <!-- source -->
+        <mkdir dir="source"/>
+        <unzip src="archive/${download.name}-source-${revision}.zip" dest="source"/>
+        <zip destfile="artifacts/sources/source.zip">
+            <fileset dir="source/src"/>
+            <fileset dir="source/docs"/>
+            <fileset dir="source/test"/>
+        </zip>
+        <mkdir dir="artifacts/docs"/>
+        <move file="archive/@project.name@.pdf" tofile="artifacts/docs/@project.name@.pdf"/>
+
         
     </build>
 </packager-module>
