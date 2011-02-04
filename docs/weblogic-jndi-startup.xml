@@ -10,6 +10,7 @@
 		<xi:include href="weblogic-jndi-startup.log"/>
 		<references>
 			<reference t="maduradocs" url="http://code.google.com/p/maduradocs/" />
+			<reference t="maduraconfiguration" url="http://code.google.com/p/maduraconfiguration/" />
 			<reference t="Apache Licence 2.0" url="http://www.apache.org/licenses/LICENSE-2.0" />
 		</references>
 	</title>
@@ -19,7 +20,7 @@
 		<h1 t="Overview">
 		<p>Unlike JBoss and Glassfish there is no way to define a custom JNDI object (eg a URL) in the WebLogic console. This provides a very simple way to do that.</p>
 
-<p>For example we use this to define the location of various configuration files (see maduraconfiguration in google code) and we locate these files using a URL defined in JNDI.</p>
+<p>For example we use this to define the location of various configuration files (see <referenceLink t="maduraconfiguration"/>) and we locate these files using a URL defined in JNDI.</p>
 
 <p>To use this you just need to put the jar file into your &lt;domain&gt;/server/lib directory` (I tested this in &lt;BEA&gt;/wlserver_10.0/samples/domains/wl_server/lib using WebLogic 10.0)</p>
 
@@ -51,6 +52,17 @@ System.out.println("configURL="+String.valueOf(config));
 </code>
 <p>Note that you can have as many of these startup classes as you want. You can reuse this same class over and over with different arguments. We typically have just one per application but your needs might be different.</p>
 </h1>
+		<a1 t="Release Notes">
+		<table width="12cm">
+			<tw>12cm</tw>
+		<tr>
+			<th>1.0</th>
+		</tr>
+		<tr>
+			<td>Initial version</td>
+		</tr>
+		</table>
+		</a1>
 	</body>
 	
 </doc>
