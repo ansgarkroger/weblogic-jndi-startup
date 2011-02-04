@@ -34,7 +34,6 @@
 		<ant target="jar"/>
 		<javadoc-macro/>
 		<source-macro/>
-		<property file="${buildproperties}"/>
 		<ivyroundup-macro />
 		<ant target="CopyToRemoteRepo"/>
 	</target>
@@ -48,7 +47,7 @@
 	<target name="local-repo" depends="test_copy">
 		<javadoc-macro/>
 		<source-macro/>
-		<property file="${buildproperties}"/>
+		<ant target="docs"/>
 		<ivyroundup-macro dist.url="file:${package.dir}"/>
 		<ant target="copyToLocalRepo"/>
 	</target>
