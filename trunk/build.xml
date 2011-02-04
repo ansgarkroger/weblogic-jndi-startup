@@ -34,6 +34,7 @@
 		<ant target="jar"/>
 		<javadoc-macro/>
 		<source-macro/>
+		<ant target="docs"/>
 		<ivyroundup-macro />
 		<ant target="CopyToRemoteRepo"/>
 	</target>
