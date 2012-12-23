@@ -56,6 +56,12 @@ System.out.println("configURL="+String.valueOf(config));
 		<table width="12cm">
 			<tw>12cm</tw>
 		<tr>
+			<th>1.2</th>
+		</tr>
+		<tr>
+			<td>Enhancement to handle more complex JNDI names (thanks to jeczmien@podgorska.ddns.info)</td>
+		</tr>
+		<tr>
 			<th>1.0</th>
 		</tr>
 		<tr>

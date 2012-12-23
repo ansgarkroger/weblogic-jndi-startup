@@ -19,9 +19,10 @@
 package nz.co.senanque.jndi;
 
 import java.lang.reflect.Constructor;
+import java.util.LinkedList;
+import java.util.Queue;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import javax.naming.*;
 
 /**
  * 
@@ -29,6 +30,7 @@ import javax.naming.NamingException;
  * Also see http://objectmix.com/weblogic/524766-startup-classes-wl6-0-a.html
  * 
  * @author Roger Parkinson
+ * @author jeczmien@podgorska.ddns.info
  * @version $Revision:$
  */
 public class WebLogicJndiStartup
@@ -86,10 +88,20 @@ public class WebLogicJndiStartup
                 throw new RuntimeException(e);
             }
         }
+        bindParam( ic, name, value );
+    }
+
+    private static void bindParam( InitialContext ic, String name, Object value )
+    {
         System.out.println("Creating JNDI entry: "+name+" "+String.valueOf(value));
         try
         {
-            ic.bind(name, value);
+            Queue<String> n = split(name);
+            Context nc = ic;
+            while (n.size() > 1) {
+                nc = checkAndCreateContext( n, nc );
+            }
+            bind( value, n.remove(), nc );
         }
         catch (NamingException e)
         {
@@ -97,4 +109,46 @@ public class WebLogicJndiStartup
         }
     }
 
+    private static void bind( Object value, String name, Context nc ) throws NamingException
+    {
+        nc.bind(name, value);
+    }
+
+    private static Context checkAndCreateContext( Queue<String> n, Context nc ) throws NamingException
+    {
+        String s = n.remove();
+        if (checkContext( nc, s ) )
+        {
+            nc = (Context)nc.lookup( s );
+        } else {
+            nc = nc.createSubcontext( s );
+        }
+        return nc;
+    }
+
+    private static Queue<String> split(String name)
+    {
+        Queue<String> retVal = new LinkedList<String>();
+        for (String s : name.split( "/" )) 
+        {
+            for (String ss : s.split( "\\." )) {
+                retVal.add( ss );
+            }
+        }
+        return retVal;
+    }
+    
+    private static boolean checkContext(Context nc, String name)
+    {
+        boolean retVal = true;
+        try
+        {
+            retVal = nc.lookup( name ) != null;
+        }
+        catch ( NamingException e )
+        {
+            retVal = false;
+        }
+        return retVal;
+    }
 }
