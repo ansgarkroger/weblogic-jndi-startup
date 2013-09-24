@@ -15,7 +15,7 @@
     under the License.
 -->
 <ivysettings>
-	<property name="ivy.cache.dir" value="${user.home}/ivyroundup" />
+	<property name="ivy.cache.dir" value="${user.home}/.ivy2" />
 	<property name="roundup-repository" value="http://ivyroundup.googlecode.com/svn/trunk" override="false" />
 
 	<settings   
